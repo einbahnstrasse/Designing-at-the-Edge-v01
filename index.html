@@ -13,10 +13,11 @@
 		<link rel="stylesheet" href="dist/theme/velodroma-superwide-wakamaifondue.css">
 		<link rel="stylesheet" href="dist/theme/NeueDINReg-wakamaifondue.css">
 		<link rel="stylesheet" href="dist/theme/ghostly.text.v01.css">
+		<!-- <script src="https://d3js.org/d3.v7.min.js"></script> -->
+		<script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
 
 		<!-- Theme used for syntax highlighted code -->
 		<link rel="stylesheet" href="plugin/highlight/monokai.css">
-
 
 	</head>
 	<body>
@@ -41,7 +42,7 @@
 						<span>r</span>
 						<span>D</span>
 					  </div>
-					  <div class="velodroma-superwide-salt words word-2 r-fit-text">
+					  <!-- <div class="velodroma-superwide-salt words word-2 r-fit-text">
 						<span>w</span>
 						<span>o</span>
 						<span>R</span>
@@ -51,38 +52,535 @@
 						<span>2</span>
 						<span>0</span>
 						<span>2</span>
-						<span>5</span>
-					  </div>
-
-					  <!-- class="hero glitch layers" -->
-					  <!-- <div class="hero-container">
-						<div class="environment">
-							<h2 class="--onum hero glitch layers" data-text="University of Illinois — Composition Colloquium — September 27, 2023" style="font-size: 0.5em; line-height: 0%;"><span>University of Illinois — Composition Colloquium — September 27, 2023</span></h2>
-
-						</div>
+						<span>6</span>
 					  </div> -->
 					<div id="glitchy-date">
 						<p style="font-size: 1.5em; font-style: oblique;" class="--onum hero glitch layers movement paths" data-text="When the System Bends: How Designing at the Edge Strengthens our Musical Creations">When the System Bends:<br>How Designing at the Edge Strengthens our Musical Creations</p>
 						<p class="--onum hero glitch layers movement paths" data-text="Rollins College — Winter Park, FL — Feburary 19, 2026">Rollins College — Winter Park, FL — Feburary 19, 2026</p>
-
-
 					</div>
-
 					<div id="div-logos" style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: center; align-items: center;">
 						<img src="./assets/logos/music-department-masthead-crown-logo-cropped.transparent.png" alt="columbia-logo" width="300px" style="background:none; border:none; box-shadow:none; transform: translate(-1dvh, 0);">
 						<img src="./assets/logos/fulbright.france.logo.transparent.png" alt="fulbright-logo" width="100px" style="background:none; border:none; box-shadow:none;">
 						<img src="./assets/logos/ACTOR_logo_colour_fullname.png" alt="actor-logo" width="140px" style="background:none; border:none; box-shadow:none; transform: translate(0, -1dvh);">
 						<img src="./assets/logos/spat.ircam.logo.gif" alt="ircam-logo" width="100px" style="background:none; border:none; box-shadow:none; transform: translate(0, -0.5dvh);">
 					</div>
-
 					<aside class="notes">
 						Well first of all, thank you all for coming.  <br>  
 						It's an honor to be here. <br><br>
 						I'd like to tell you a few things about myself and then see what you think.<br>  
 						So let's get started...
 					</aside>
-
 				</section>
+
+
+		<section class="centered-media-slide">
+			<div class="regular-text --onum">
+				<div style="padding-bottom: 15px;">
+				<h4>Artists + Technology</h4>
+				</div>
+				<div class="media-row">
+				<div class="video-col">
+					<video
+					src="assets/video/luke.video.mp4"
+					controls
+					playsinline
+					preload="metadata"
+					></video>
+				</div>
+				<blockquote class="quote-col">
+					<p style="font-size: 100%;">“Every civilization will use a maximum level of technology available to it to make art.”</p>					
+					<p style="font-size: 100%;">“And it’s the responsibility of the artist <br><strong>to ask questions about what<br>that technology means</strong> <br>and how it reflects our culture.”</p>
+					<p style="font-size: 90%;"><em>—R. Luke DuBois, TED (2016)</em></p>
+				</blockquote>
+				</div>
+			</div>
+		</section>
+
+<!-- ========================================= -->
+<!-- INTRO: WHY “EDGE CASES” (GOULD) -->
+<!-- ========================================= -->
+
+<section>
+  <div class="regular-text --onum" style="width:100%;">
+    <h4 id="concerns-header">How to <em style="color: #43d37b;">Bend</em> Any System</h4>
+
+    <p class="fragment fade-in slightly-smaller" data-fragment-index="1" id="default-frag">
+      Software has <strong style="color: #4ea1ff;">default use cases:</strong> how it is <em>designed</em> to be used.
+    </p>
+
+    <p class="fragment fade-in slightly-smaller" data-fragment-index="2" id="edge-frag">
+    <strong style="color: #43d37b;">Edge cases</strong> <em>push</em> those defaults towards their limits...<br>— revealing what “normal use” hides.
+    </p>
+
+    <div id="echart-scatter"
+         style="display:block; width:100%; max-width:1100px; height:360px; margin-top:12px;"></div>
+  </div>
+
+	<script>
+	(function () {
+		const el = document.getElementById('echart-scatter');
+		if (!el || el.dataset.init === "1") return;
+		el.dataset.init = "1";
+
+		if (typeof window.echarts === "undefined") {
+		console.error("ECharts not found. Load echarts.min.js before this slide.");
+		return;
+		}
+
+		const chart = echarts.init(el);
+
+		const normal = [
+		[0.5, 0.75, "Commercial recording & mixing"],
+		[0.4, 2.4, "Trim silence"],
+		[1.0, 1.6, "Podcast edit"],
+		[1.3, 2.8, "Add reverb"],
+		[1.9, 1.5, "Mastering: Compression / limiter"],
+		[3.1, 2.4, "Quantize drums"],
+		[2.9, 1.9, "Bounce .WAV"],
+		[2.5, 2.9, "Vocal accompaniment"],
+		[3.6, 1.3, "Mix bus"],
+		[3.9, 2.2, "Sidechain compression"],
+		[4.1, 1.7, "EQ tweak"]
+		];
+
+		const outliers = [
+		[4.4,4.5,"Microtonal mockup"],
+		[4.3,3.5,'Film scoring "stems"'],
+		[4.6,2.9,"Record MIDI from\nother programs"],
+		[3.5,3.4,"Simulation of a\nlive performer"],
+		[3.8,5.2,"Orchestration Workbench"],
+		[4.5,4.,"Sound Design lab"],
+		[3.1,4,"Improvisational instrument"],
+		[3.4,4.7,"Click + Cue tracks"]
+		];
+
+		const normalColor = '#4ea1ff';
+		const outlierColor = '#43d37b';
+
+		// ----- Base option (AXES ALWAYS PRESENT, POINTS UPDATED LATER) -----
+		const base = {
+		animation: true,
+		animationDuration: 1000,
+		animationEasing: 'cubicOut',
+		animationDurationUpdate: 1000,
+		animationEasingUpdate: 'cubicOut',
+		title: {
+			text: 'Ways We Can Use Logic',
+			left: 'center',
+			top: 0,
+			textStyle: {
+			fontSize: 24,
+			fontWeight: 500
+			}
+		},
+
+		textStyle: {
+			fontFamily: "'Optician Sans', sans-serif"
+		},
+
+		grid: { left: 70, right: 30, top: 20, bottom: 60 },
+
+		xAxis: {
+			min: 0, max: 5.5,
+			name: 'Stuff We Normally Do / How Far We’re Pushing Software →',
+			nameLocation: 'middle',
+			nameGap: 38,
+			nameTextStyle: {
+			fontSize: 20,
+			fontFamily: "'Optician Sans', sans-serif"
+			},
+			axisLabel: {
+			fontFamily: "'Optician Sans', sans-serif"
+			},
+			axisLine: { lineStyle: { opacity: 0.35 } },
+			axisTick: { show: false },
+			splitLine: { show: false }
+		},
+
+		yAxis: {
+			min: 0, max: 6,
+			name: 'Creative Shenanigans →',
+			nameLocation: 'middle',
+			nameGap: 45,
+			nameTextStyle: {
+			fontSize: 20,
+			fontFamily: "'Optician Sans', sans-serif"
+			},
+			axisLabel: {
+			fontFamily: "'Optician Sans', sans-serif"
+			},
+			axisLine: { lineStyle: { opacity: 0.35 } },
+			axisTick: { show: false },
+			splitLine: { show: false }
+		},
+
+		series: [
+			{
+			id: 'normalSeries',
+			name: 'Normal',
+			type: 'scatter',
+			data: [],
+			symbolSize: 11,
+			label: {
+				fontFamily: "'Optician Sans', sans-serif",
+				show: false,
+				formatter: (p) => p.data[2],
+				position: 'right',
+				opacity: 1,
+				fontSize: 11,
+				hideOverlap: true,
+			},
+			itemStyle: { color: normalColor, opacity: 0.85 }
+			},
+			{
+			id: 'outlierSeries',
+			name: 'Outliers',
+			type: 'scatter',
+			data: [],
+			symbolSize: 13,
+			label: {
+				fontFamily: "'Optician Sans', sans-serif",
+				show: false,
+				formatter: (p) => p.data[2],
+				position: 'right',
+				fontSize: 12,
+				opacity: 0.95,
+				hideOverlap: true,
+			},
+			itemStyle: {
+				color: outlierColor,
+				opacity: 0.95,
+				shadowBlur: 14,
+				shadowColor: 'rgba(0,0,0,0.25)'
+			}
+			}
+		]
+		};
+
+		chart.setOption(base);
+
+		// ----- Three-state update (MINIMAL CHANGE) -----
+		const defaultFrag = document.getElementById('default-frag');
+		const edgeFrag = document.getElementById('edge-frag');
+
+		// --- slide-in animation helpers ---
+		const shift = (data, dx, dy) => data.map(d => [d[0] + dx, d[1] + dy, d[2]]);
+		let prevState = -1;
+		let blueShown = false;
+		let greenShown = false;
+
+		function applyState() {
+		const dVis = defaultFrag && defaultFrag.classList.contains('visible');
+		const eVis = edgeFrag && edgeFrag.classList.contains('visible');
+
+		const state = eVis ? 2 : (dVis ? 1 : 0);
+
+		// base intended data
+		const normalFinal = (state >= 1) ? normal : [];
+		const outlierFinal = (state === 2) ? outliers : [];
+
+		// IMPORTANT: on first appearance, draw them at an offset first
+		const blueFirstAppear = (state >= 1 && !blueShown);
+		const greenFirstAppear = (state === 2 && !greenShown);
+
+		const normalStart = blueFirstAppear ? shift(normal, -0.6, 0.35) : normalFinal;
+		const outlierStart = greenFirstAppear ? shift(outliers, -0.6, 0.35) : outlierFinal;
+
+		chart.setOption({
+			series: [
+			{
+				id: 'normalSeries',
+				data: normalStart,
+				label: { show: state >= 1 },
+				itemStyle: { color: normalColor, opacity: (state === 2) ? 0.45 : 0.85 }
+			},
+			{
+				id: 'outlierSeries',
+				data: outlierStart,
+				label: { show: state === 2 },
+				itemStyle: {
+				color: outlierColor,
+				opacity: 0.95,
+				shadowBlur: 14,
+				shadowColor: 'rgba(0,0,0,0.25)'
+				}
+			}
+			]
+		}, { lazyUpdate: true });
+
+		// Now animate into place on next frame
+		if (blueFirstAppear) {
+			blueShown = true;
+			requestAnimationFrame(() => {
+			chart.setOption({
+				series: [{ id: 'normalSeries', data: normalFinal }]
+			}, { lazyUpdate: true });
+			});
+		}
+
+		if (greenFirstAppear) {
+			greenShown = true;
+			requestAnimationFrame(() => {
+			chart.setOption({
+				series: [{ id: 'outlierSeries', data: outlierFinal }]
+			}, { lazyUpdate: true });
+			});
+		}
+
+		// Allow replay when stepping backwards then forwards again
+		if (state < prevState) {
+			if (state < 1) blueShown = false;
+			if (state < 2) greenShown = false;
+		}
+		prevState = state;
+
+		chart.resize();
+		}
+
+		// Observe fragment class changes (Reveal toggles .visible)
+		const obsCfg = { attributes: true, attributeFilter: ['class'] };
+		if (defaultFrag) new MutationObserver(applyState).observe(defaultFrag, obsCfg);
+		if (edgeFrag) new MutationObserver(applyState).observe(edgeFrag, obsCfg);
+
+		// ----- The working resize robustness (unchanged) -----
+		const forceResize = () => {
+		requestAnimationFrame(() => {
+			chart.resize();
+			requestAnimationFrame(() => chart.resize());
+		});
+		};
+
+		if (typeof ResizeObserver !== "undefined") {
+		new ResizeObserver(() => chart.resize()).observe(el);
+		}
+		window.addEventListener('resize', () => chart.resize());
+
+		forceResize();
+		setTimeout(forceResize, 50);
+		setTimeout(forceResize, 250);
+
+		// Initial state (header only)
+		applyState();
+	})();
+	</script>
+</section>
+
+<section>
+  <div class="regular-text --onum">
+    <h4>Stephen Jay Gould</h4>
+	<figure id="gma" style="position: fixed; top: 0px; right: 0px;">
+		<img src="./assets/img/gould.v01.jpg" alt="Gould" width="200px" style="background:none; border:none; box-shadow:none;">
+		<!-- <figcaption class="figcap">Stephen Jay Gould</figcaption> -->
+	</figure>
+	<div class="slightly-smaller">
+		<p class="fragment">Gould (1941-2002) was a biologist who studied<br>species that were almost <em>comically specific</em>.</p>
+		<p class="fragment">He wrote about <strong><em style="color: #43d37b;">edge cases</em></strong> — organisms shaped by<br>extreme conditions, odd histories, and ecologies.</p>
+		<p class="fragment">Example: <strong style="color: #43d37b;">snails</strong> — whose shells preserve a record of tiny changes over long spans of time, which Gould studied in obsessive detail.</p>
+	</div>
+  </div>
+</section>
+
+<section>
+  <div class="regular-text --onum">
+    <h4>Snails... Really?!</h4>
+	<div class="slightly-smaller">
+		<p>But the snail wasn’t the point. The <em>method</em> was...</p>
+		<p class="fragment">Gould’s studies of narrow subjects reveal <em>history at work</em>,<br>which <strong style="color: #43d37b;">changed how we understand <em>“the way things are.”</em></strong></p>
+		<p class="fragment">A <strong style="color: #43d37b;">specific case</strong> can expose <strong style="color: #4ea1ff;">what a typical case hides:</strong><br>limits, tradeoffs, path-dependence, and hidden assumptions.</p> 
+		<p class="fragment">The <em>narrow</em> made a <em>broader pattern</em> visible.</p>
+	</div>
+  </div>
+</section>
+
+			<section>
+				<div class="regular-text --onum" style="padding-bottom: 15px;">
+					<h6>A Musical Example:</h6>
+					<h4>Circuit Bending</h4>
+				</div>
+				<div style="display: flex; gap: 40px; align-items: flex-start;">
+					<figure style="flex:1; text-align:center;">
+					<iframe style="width:100%; aspect-ratio:16/9;"
+						src="https://www.youtube.com/embed/lnXNm4hfrWs"
+						allowfullscreen>
+					</iframe>
+					<figcaption style="margin-top:10px; font-size:0.7em;">
+						<h6 style="color: #4ea1ff;">Normal Use</h6>
+					</figcaption>
+					</figure>
+					<figure style="flex:1; text-align:center;">
+					<iframe style="width:100%; aspect-ratio:16/9;"
+						src="https://www.youtube.com/embed/mFM_PT_7N1w"
+						allowfullscreen>
+					</iframe>
+					<figcaption style="margin-top:10px; font-size:0.7em;">
+						<h6 style="color: #43d37b;">Edge Case</h6>
+					</figcaption>
+					</figure>
+				</div>
+			</section>
+
+			<section>
+				<div class="regular-text --onum">
+				<div style="padding-bottom: 15px;">
+					<h4>Ethos of Bending</h4>
+				</div>
+				<p class="fragment slightly-smaller">
+					Instrument building status quo: <em style="color: #4ea1ff;">“Define a goal first, then construct it.”</em>
+				</p>
+
+				<p class="fragment slightly-smaller">
+					Musical builders in the 1970s <strong>resisted</strong> this model
+				</p>
+
+				<p class="fragment slightly-smaller">
+					and treated the design process as <strong style="color: #43d37b;">exploratory.</strong> 
+				</p>
+
+				<p class="fragment slightly-smaller">
+					<strong style="color: #43d37b;">Unexpected behaviors</strong> were not errors but <strong>opportunities</strong>.  
+				</p>
+
+				<p class="fragment slightly-smaller">
+					<strong style="color: #43d37b;">Deviation from an original plan</strong> was a <strong>strategy</strong> — <em>not a failure</em>.  
+				</p>
+				</div>
+			</section>
+
+			<section>
+				<div class="regular-text --onum">
+				<div style="padding-bottom: 15px;">
+					<h4>Ethos of Bending</h4>
+				</div>
+				<blockquote class="slightly-smaller">
+					<p>“Bending’s try-anything extreme experimentalism can produce <strong style="color: #43d37b;">wonderful results never anticipated by the original designers</strong> of the device being bent.”</p>
+					<cite style="font-size: 80%;">—Nic Collins, Handmade Electronic Music</cite>
+				</blockquote>
+
+				</div>
+			</section>
+
+
+
+
+			<!-- <section>
+				<div class="regular-text --onum">
+					<div style="padding-bottom: 15px;">
+						<h4>Music Technology</h4>
+					</div>
+					  <video
+							src="assets/video/luke.video.mp4"
+							controls
+							playsinline
+							preload="metadata"
+							style="width: 50%; max-height: 70vh; justify-content: center; align-items: center;"
+						></video>
+					<p style="font-size: 60%;"><em>—R. Luke DuBois, TED</em></p>
+				</div>
+			</section> -->
+
+
+
+
+
+<section>
+  <div class="regular-text --onum">
+    <h4>Discussion</h4>
+	<div class="slightly-smaller">
+		<ul>
+			<li class="fragment">Ever used your voice / instrument in a way you were told <em>not</em> to?</li> 
+			<!-- <li class="fragment">What happened when you did?? :)</li> -->
+			<li class="fragment">Did the system resist? Did it reveal a hidden capacity?</li>
+			<li class="fragment">What have you been told your voice / instrument <em>“shouldn’t”</em> do?</li>
+			<!-- <li class="fragment">Have you ever broken a <em>“rule,”</em> yet discovered something useful?</li> -->
+			<li class="fragment">What becomes audible (or, visible)  when something is <em>pushed beyond its intended use?</em></li>
+		</ul>
+	</div>
+
+  </div>
+</section>
+
+<section>
+  <div class="regular-text --onum">
+    <h4>Reframing the DAW</h4>
+	<figure id="gma" style="position: fixed; top: 40px; right: 0px;">
+		<img src="./assets/img/logic-pro-x-10-3-screenshot-1200x751.jpg" alt="Logic Pro" width="300px" style="background:none; border:none; box-shadow:none;">
+	</figure>
+	<div style="font-size: 70%">
+    <p class="fragment">
+      The <strong>DAW</strong> (<strong>D</strong>igital <strong>A</strong>udio <strong>W</strong>orkstation; like Logic) is<br>often <span style="color: #4ea1ff;">treated as a recording studio</span> in software form.
+    </p>
+
+    <p class="fragment">
+      But structurally, it is <strong>a synchronization engine</strong>:
+      <br>where events are <em>aligned</em>, <em>layered</em>, <em>coordinated</em>, <br><em>mocked up</em>, and even <em>performed</em>.
+    </p>
+
+    <p class="fragment">
+      Producing recordings is just one possible use case.
+    </p>
+
+    <p class="fragment" style="color: #43d37b;">
+      <strong>What <em>else</em> would a powerful synchronization tool be useful for?</strong>
+    </p>
+
+	</div>
+  </div>
+</section>
+
+<section>
+	<div class="regular-text --onum">
+		<h4>Disclaimer</h4>
+		<p class="fragment">I’m not asking you to adopt a style or aesthetic...</p>
+		<p class="fragment">I’m interested in what we learn (as artists) using technology in ways it <em>wasn’t originally designed for</em>.</p>
+		<p class="fragment">In such moments of <em>bending</em>, we often discover <br><strong style="color: #43d37b;">new ways of creating and organizing music.</strong></p>
+	</div>
+</section>
+
+<section class="simulation-slide">
+	<div class="regular-text --onum">
+		<h4 style="padding-bottom: 15px;">Simulation</h4>
+		  <img 
+				src="assets/img/simulation.v02.png"
+				alt="Musical simulation diagram"
+				class="corner-image"
+			>
+		<div class="slightly-smaller">
+			<!-- <p class="fragment">One recurring word in today’s examples is <em>simulation</em>.</p> -->
+			<p class="fragment">A DAW can function as a <em>simulation space</em>.</p>
+			<p class="fragment"><strong style="color: #43d37b;">A testing ground for your musical ideas:</strong><br>nuanced timing, timbre, tuning, orchestration, rhythmic coordination, or melodic balance...</p>
+			<p class="fragment"><em>before</em> committing your ideas to performance.</p>
+			<p class="fragment">Example: use Logic to <em>simulate the performance of a live musician</em> in a coordinated score/piece.</p>
+		</div>
+	</div>
+</section>
+
+<section>
+	<div class="regular-text --onum">
+		<h4>Three Domains</h4>
+		<p class="fragment">Simulating <em>time</em>: precision, coordination, proportionality.</p>
+		<p class="fragment">Simulating <em>sound</em>: timbral aggregates, orchestration, tuning.</p>
+		<p class="fragment">Simulating <em>systems</em>: routing, session architecture, inter-platform design.</p>
+	</div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 				<!-- <section>
 					<h3 style="font-size: 100%;">Header Idea No. 3</h3>
 					<p class="--onum --dlig">v|^ /> -> |_> |v |^ <-> <_| <\ <- ^|v <br> This is a paragraph 1234567890!</p>
@@ -679,7 +1177,7 @@
 
 				  <section>
 					<div id="concerns-header">
-					  <h4 id="concerns-header">🎧 Listening Mindset</h4>
+					  <h4 id="concerns-header">Listening Mindset</h4>
 					  <ul id="bio-list" style="font-size: 0.75em">
 						<li class="fragment fade-left">Instead of asking: <em>“How <b>present</b> can <b>you</b> be?”</em></li>
 						<li class="fragment fade-left">I’m asking: <em>“How softly can you shape a harmonic cloud — without puncturing it?”</em></li>
@@ -956,6 +1454,7 @@
 				// 	//shareUrl: window.location.href
         		// }
 			});
+			// window.deck = deck;
 		</script>
 	</body>
 </html>
