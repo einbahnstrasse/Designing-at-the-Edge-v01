@@ -1131,6 +1131,20 @@ section {
   pointer-events: none;
 }
 
+/* your corner image */
+.corner-image2 {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+
+  width: 35%;
+  /* max-width: 360px; */
+  height: auto;
+
+  z-index: 2;
+  pointer-events: none;
+}
+
 /* reserve space so text never runs under the image */
 .simulation-slide .regular-text.--onum {
   padding-right: calc(26% + 4rem); /* image width + its right/top offsets/gap */
