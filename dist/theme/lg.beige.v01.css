@@ -1149,3 +1149,21 @@ section {
 .simulation-slide .regular-text.--onum {
   padding-right: calc(26% + 4rem); /* image width + its right/top offsets/gap */
 }
+
+.qr-figure {
+  position: absolute;
+  top: 20px;
+  right: 60px;
+  text-align: center;
+}
+
+.qr-figure img {
+  width: 220px;
+}
+
+.qr-figure figcaption {
+  font-size: 0.4em;
+  font-style: italic;
+  margin-top: -30px;
+  /* opacity: 0.8; */
+}
